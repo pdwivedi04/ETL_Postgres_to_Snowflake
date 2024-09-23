@@ -1,0 +1,20 @@
+version: '2.1'
+services:
+  airflow:
+    image: apache/airflow:latest
+    container_name: airflow
+    ports:
+      - "8080:8080"
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=True
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - PYTHONPATH=/opt/airflow/dags:/opt/airflow/dags/config:/opt/airflow/dags/utils
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+      - C:/Users/Sravan/airflow/logs:/opt/airflow/logs
+      - C:/Users/Sravan/airflow/plugins:/opt/airflow/plugins
+    env_file:
+      - ./.env
+    command: "standalone"
